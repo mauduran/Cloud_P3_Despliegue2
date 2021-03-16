@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: despliegue-app-2
+  labels:
+    name: despliegue-app21
+    app: despliegue-app-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: despliegue-app-2-pod
+      app: despliegue-app-2
+  template:
+    metadata:
+      name: despliegue-app-2-pod
+      labels:
+        name: despliegue-app-2-pod
+        app: despliegue-app-2
+    spec:
+      containers:
+        - name: despliegue-app-2
+          image: "812568621328.dkr.ecr.us-east-1.amazonaws.com/p3_despliegue2:latest"
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 128Mi
+              cpu: "0.2"
+          livenessProbe:
+            httpGet:
+              path: /revisasivivo
+              port: 4500
+            initialDelaySeconds: 5
+            periodSeconds: 5
